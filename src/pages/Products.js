@@ -33,7 +33,7 @@ export const Products = () => {
 
   useEffect(() => {
     getProducts();
-  });
+  }, []);
 
   return (
     <Container>

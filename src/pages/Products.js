@@ -38,7 +38,10 @@ export const Products = () => {
   return (
     <Container>
       <Grid>
-        {products && products.map((product) => <Product value={product} />)}
+        {products &&
+          products.map((product) => (
+            <Product key={product.id} value={product} />
+          ))}
       </Grid>
     </Container>
   );

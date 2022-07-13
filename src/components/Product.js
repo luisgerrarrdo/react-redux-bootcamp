@@ -59,7 +59,7 @@ const Button = styled.button`
 
 const Product = ({ value: product }) => {
   return (
-    <Article key={product.id}>
+    <Article>
       <ImageContainer>
         <Image src={product?.images?.[0]} alt={product.name} />
       </ImageContainer>

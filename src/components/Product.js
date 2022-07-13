@@ -24,10 +24,11 @@ const Image = styled.img`
 `;
 
 const Details = styled.div`
+  display: flex;
+  flex-direction: column;
   align-self: center;
-  width: 100%;
   text-align: center;
-  padding: 16px;
+  padding: 16px 0;
 `;
 
 const Name = styled.h3`
@@ -48,7 +49,6 @@ const StyledPrice = styled.h4`
 
 const Button = styled.button`
   margin-top: 16px;
-  width: 100%;
   background-color: rgb(32, 52, 73);
   color: white;
   border: 0px;

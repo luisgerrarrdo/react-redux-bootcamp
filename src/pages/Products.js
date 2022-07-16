@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Product from "../components/Product";
+import { API_KEY, PRODUCTS_URL } from "../constants/global";
 
 const Container = styled.section`
   width: 70%;
@@ -20,12 +21,10 @@ export const Products = () => {
 
   async function getProducts() {
     try {
-      const response = await axios.get(
-        "https://raw.githubusercontent.com/luisgerrarrdo/react-redux-bootcamp/main/public/data/products.json"
-      );
-      const { products: productsResponse } = response.data.data;
-
-      setProducts(productsResponse.items);
+      const response = await axios.get(PRODUCTS_URL, {
+        headers: { "x-api-key": API_KEY },
+      });
+      setProducts(response.data.items);
     } catch (error) {
       console.error(error);
     }

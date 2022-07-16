@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Summary from "../components/Summary";
-import { BASE_API_URL } from "../constants/global";
+import { API_KEY, PRODUCTS_URL } from "../constants/global";
 
 const Container = styled.main`
   width: 70%;
@@ -82,13 +82,12 @@ export const Cart = () => {
 
   async function getProducts() {
     try {
-      const response = await axios.get(BASE_API_URL);
-      const { products: productsResponse } = response.data.data;
+      const response = await axios.get(PRODUCTS_URL, {
+        headers: { "x-api-key": API_KEY },
+      });
 
       setcartItems(
-        productsResponse.items
-          .slice(-2)
-          .map((item) => ({ ...item, quantity: 1 }))
+        response.data.items.slice(-2).map((item) => ({ ...item, quantity: 1 }))
       );
     } catch (error) {
       console.error(error);

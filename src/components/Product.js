@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { addToCart } from "../redux/slices/cartSlice";
 
 const Article = styled.article`
   width: 100%;
@@ -58,6 +60,12 @@ const Button = styled.button`
 `;
 
 const Product = ({ value: product }) => {
+  const dispatch = useDispatch();
+
+  function handleAddToCart(product) {
+    dispatch(addToCart(product));
+  }
+
   return (
     <Article>
       <ImageContainer>
@@ -67,7 +75,7 @@ const Product = ({ value: product }) => {
         <Name>{product.name}</Name>
         <p>{product?.categories?.[0]}</p>
         <StyledPrice>{`$ ${product.price}`}</StyledPrice>
-        <Button>Add to cart</Button>
+        <Button onClick={() => handleAddToCart(product)}>Add to cart</Button>
       </Details>
     </Article>
   );

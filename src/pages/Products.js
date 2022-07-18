@@ -1,8 +1,8 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../redux/slices/productsSlice";
 import styled from "styled-components";
 import Product from "../components/Product";
-import { API_KEY, PRODUCTS_URL } from "../constants/global";
 
 const Container = styled.section`
   width: 70%;
@@ -17,22 +17,7 @@ const Grid = styled.div`
 `;
 
 export const Products = () => {
-  const [products, setProducts] = useState(null);
-
-  async function getProducts() {
-    try {
-      const response = await axios.get(PRODUCTS_URL, {
-        headers: { "x-api-key": API_KEY },
-      });
-      setProducts(response.data.items);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  const products = useSelector(selectProducts);
 
   return (
     <Container>

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { selectCart } from "../redux/slices/cartSlice";
 import styled from "styled-components";
 
 const SummaryContainer = styled.section`
@@ -17,17 +19,24 @@ const Button = styled.button`
 `;
 
 const Summary = () => {
+  const cart = useSelector(selectCart);
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (acc, { quantity, price }) => acc + quantity * price,
+    0
+  );
+
   return (
     <SummaryContainer>
       <h3>Summary</h3>
       <hr />
       <div>
-        <p>Items: {2}</p>
+        <p>Items: {totalItems}</p>
       </div>
       <hr />
       <div>
         <p>Total Cost</p>
-        <p>{`$ ${2000}`}</p>
+        <p>{`$${totalPrice.toFixed(2)}`}</p>
       </div>
       <Button>Checkout</Button>
     </SummaryContainer>

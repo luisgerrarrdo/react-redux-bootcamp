@@ -79,7 +79,6 @@ export const Login = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("trying to login...");
       const response = await loginApi(username, password);
       console.log(`login response: ${response}`);
       history.push("/products");

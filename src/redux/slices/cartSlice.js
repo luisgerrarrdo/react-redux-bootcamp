@@ -1,9 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { API_KEY, ORDERS_URL } from "../../constants/global";
+
+export const placeOrder = createAsyncThunk(
+  "cart/placeOrder",
+  async ({ cart }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(ORDERS_URL, cart, {
+        headers: { "x-api-key": API_KEY },
+      });
+
+      return response.data;
+    } catch (e) {
+      rejectWithValue(e);
+    }
+  }
+);
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
+    placeOrderLoading: false,
+    placeOrderError: null,
+    placeOrderResult: {},
   },
   reducers: {
     addToCart: (state, action) => {
@@ -34,10 +54,39 @@ export const cartSlice = createSlice({
         }
       }
     },
+    clearOrderResult: (state, action) => {
+      state.placeOrderResult = {};
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(placeOrder.pending, (state, action) => {
+        state.placeOrderLoading = true;
+      })
+      .addCase(placeOrder.fulfilled, (state, action) => {
+        state.placeOrderLoading = false;
+        state.placeOrderResult = action.payload;
+        state.items = [];
+      })
+      .addCase(placeOrder.rejected, (state, action) => {
+        state.placeOrderLoading = false;
+        state.placeOrderError = action.payload;
+      });
   },
 });
 
 export const selectCart = (state) => state.cart.items;
-export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
+export const selectCartPlaceOrderLoading = (state) =>
+  state.cart.placeOrderLoading;
+export const selectCartPlaceOrderResult = (state) =>
+  state.cart.placeOrderResult;
+export const selectCartPlaceOrderError = (state) => state.cart.placeOrderError;
+export const {
+  clearCart,
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+  clearOrderResult,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

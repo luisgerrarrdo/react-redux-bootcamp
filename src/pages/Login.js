@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { PRODUCTS_RESOURCE } from "../constants/global";
 import loginApi from "../utils/loginApi";
 
 const Container = styled.section`
@@ -81,7 +82,7 @@ export const Login = () => {
     try {
       const response = await loginApi(username, password);
       console.log(`login response: ${response}`);
-      history.push("/products");
+      history.push(PRODUCTS_RESOURCE);
     } catch (e) {
       alert(e);
       console.error(e);

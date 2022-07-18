@@ -1,27 +1,31 @@
-import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import {Products} from '../pages/Products';
-import {Cart} from '../pages/Cart';
-import {Home} from '../pages/Home';
-import {Header} from '../components/Header';
-import { Login } from '../pages/Login';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Products } from "../pages/Products";
+import { Cart } from "../pages/Cart";
+import { Home } from "../pages/Home";
+import { Header } from "../components/Header";
+import { Login } from "../pages/Login";
+import { Orders } from "../pages/Orders";
 
 export const AppRouter = () => {
   return (
     <Router>
       <Header />
       <Switch>
-        <Route exact path='/'>
+        <Route exact path="/">
           <Home />
         </Route>
-        <Route path='/products'>
+        <Route path="/products">
           <Products />
         </Route>
-        <Route path='/cart'>
+        <Route path="/cart">
           <Cart />
         </Route>
-        <Route path='/login'>
+        <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/orders">
+          <Orders />
         </Route>
       </Switch>
     </Router>

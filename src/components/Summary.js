@@ -1,6 +1,8 @@
-import { useSelector } from "react-redux";
-import { selectCart } from "../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCart, placeOrder } from "../redux/slices/cartSlice";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+import { ORDERS_RESOURCE } from "../constants/global";
 
 const SummaryContainer = styled.section`
   background-color: rgb(245, 245, 245);
@@ -19,12 +21,20 @@ const Button = styled.button`
 `;
 
 const Summary = () => {
+  const history = useHistory();
   const cart = useSelector(selectCart);
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = cart.reduce(
     (acc, { quantity, price }) => acc + quantity * price,
     0
   );
+
+  const dispatch = useDispatch();
+
+  function handlePlaceOrder() {
+    dispatch(placeOrder(cart));
+    history.push(ORDERS_RESOURCE);
+  }
 
   return (
     <SummaryContainer>
@@ -38,7 +48,7 @@ const Summary = () => {
         <p>Total Cost</p>
         <p>{`$${totalPrice.toFixed(2)}`}</p>
       </div>
-      <Button>Checkout</Button>
+      {totalItems > 0 && <Button onClick={handlePlaceOrder}>Checkout</Button>}
     </SummaryContainer>
   );
 };

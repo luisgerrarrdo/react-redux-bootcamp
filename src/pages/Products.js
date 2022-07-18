@@ -33,6 +33,7 @@ export const Products = () => {
     return () => {
       promise.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -12,7 +12,7 @@ export const placeOrder = createAsyncThunk(
 
       return response.data;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );

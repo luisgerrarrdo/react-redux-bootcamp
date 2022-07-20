@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { PRODUCTS_RESOURCE } from "../constants/global";
+import { setIsAuthentiocated } from "../redux/slices/productsSlice";
 import loginApi from "../utils/loginApi";
 
 const Container = styled.section`
@@ -77,11 +79,13 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     try {
       const response = await loginApi(username, password);
       console.log(`login response: ${response}`);
+      dispatch(setIsAuthentiocated(true));
       history.push(PRODUCTS_RESOURCE);
     } catch (e) {
       alert(e);

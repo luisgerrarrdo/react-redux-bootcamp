@@ -6,27 +6,28 @@ import { Home } from "../pages/Home";
 import { Header } from "../components/Header";
 import { Login } from "../pages/Login";
 import { Orders } from "../pages/Orders";
+import PrivateRoute from "./PrivateRoute";
 
 export const AppRouter = () => {
   return (
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/">
+        <PrivateRoute exact path="/">
           <Home />
-        </Route>
-        <Route path="/products">
+        </PrivateRoute>
+        <PrivateRoute path="/products">
           <Products />
-        </Route>
-        <Route path="/cart">
+        </PrivateRoute>
+        <PrivateRoute path="/cart">
           <Cart />
-        </Route>
+        </PrivateRoute>
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/orders">
+        <PrivateRoute path="/orders">
           <Orders />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Router>
   );

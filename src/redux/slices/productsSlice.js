@@ -23,6 +23,12 @@ export const productsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
+    isAuthenticated: false,
+  },
+  reducers: {
+    setIsAuthentiocated: (state, action) => {
+      state.isAuthenticated = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -43,5 +49,8 @@ export const productsSlice = createSlice({
 export const selectProducts = (state) => state.products.data;
 export const selectProductsLoading = (state) => state.products.loading;
 export const selectProductsError = (state) => state.products.error;
+export const selectIsAuthenticated = (state) => state.products.isAuthenticated;
+
+export const { setIsAuthentiocated } = productsSlice.actions;
 
 export default productsSlice.reducer;

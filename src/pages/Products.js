@@ -1,5 +1,11 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getProducts,
+  selectProducts,
+  selectProductsError,
+  selectProductsLoading,
+} from "../redux/slices/productsSlice";
 import styled from "styled-components";
 import Product from "../components/Product";
 
@@ -16,27 +22,24 @@ const Grid = styled.div`
 `;
 
 export const Products = () => {
-  const [products, setProducts] = useState(null);
-
-  async function getProducts() {
-    try {
-      const response = await axios.get(
-        "https://raw.githubusercontent.com/luisgerrarrdo/react-redux-bootcamp/main/public/data/products.json"
-      );
-      const { products: productsResponse } = response.data.data;
-
-      setProducts(productsResponse.items);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const dispatch = useDispatch();
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
+  const products = useSelector(selectProducts);
 
   useEffect(() => {
-    getProducts();
+    const promise = dispatch(getProducts());
+
+    return () => {
+      promise.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Container>
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
       <Grid>
         {products &&
           products.map((product) => (
